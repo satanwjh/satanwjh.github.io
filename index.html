@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>我的同步导航</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif}
+:root{
+  --bg:#f5f7fa;--card:#fff;--text:#222;--muted:#666;
+  --border:#ddd;--accent:#409eff;--danger:#f56c6c;--success:#67c23a
+}
+[data-theme="dark"]{
+  --bg:#1a1a1a;--card:#2c2c2c;--text:#eee;--muted:#aaa;
+  --border:#444;--accent:#53a6ff;--danger:#ff7a7a;--success:#76d650
+}
+body{background:var(--bg);color:var(--text);padding:20px;max-width:1100px;margin:0 auto;transition:.2s}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+button{padding:7px 12px;border-radius:6px;border:none;cursor:pointer;font-size:14px}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-success{background:var(--success);color:#fff}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-theme{background:var(--card);color:var(--text);border:1px solid var(--border)}
+.panel{background:var(--card);padding:14px;border-radius:10px;margin-bottom:14px;border:1px solid var(--border)}
+input,select{width:100%;padding:9px;margin:6px 0;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text)}
+h2{font-size:18px;margin:18px 0 10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:10px}
+.item{background:var(--card);padding:12px;border-radius:8px;border:1px solid var(--border)}
+.item a{color:var(--text);text-decoration:none;font-weight:500;display:block;margin-bottom:6px}
+.item .del{font-size:12px;color:var(--danger);cursor:pointer}
+.hide{display:none}
+.tip{font-size:13px;color:var(--muted);margin:10px 0}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <h1>我的同步导航</h1>
+  <div class="btns">
+    <button class="btn-primary" onclick="toggleAdd()">+ 添加网站</button>
+    <button class="btn-success" onclick="exportJson()">导出 sites.json</button>
+    <button class="btn-success" onclick="importJsonClick()">导入 sites.json</button>
+    <button class="btn-theme" id="toggleDark">暗黑模式</button>
+  </div>
+</div>
+
+<div class="tip">
+  使用方法：添加网站 → 导出 sites.json → 上传到 GitHub 覆盖旧文件 → 完成同步
+</div>
+
+<div class="panel hide" id="addPanel">
+  <input id="name" placeholder="网站名称">
+  <input id="url" placeholder="网址（https://...）">
+  <select id="cate">
+    <option value="常用">常用</option>
+    <option value="工具">工具</option>
+    <option value="视频">视频</option>
+  </select>
+  <button class="btn-primary" onclick="addSite()" style="margin-top:6px">保存到本地</button>
+</div>
+
+<div id="content"></div>
+<input type="file" id="importFile" accept=".json" hidden onchange="importJson(event)">
+
+<script>
+// ======================================
+// 配置：从 GitHub 加载 sites.json
+// ======================================
+const CONFIG_URL = "sites.json";
+
+let siteData = {
+  常用: [],
+  工具: [],
+  视频: []
+};
+
+// 从 GitHub 读取配置
+async function loadFromGithub() {
+  try {
+    const res = await fetch(CONFIG_URL);
+    if (res.ok) siteData = await res.json();
+  } catch (e) {}
+  render();
+}
+
+// 本地存储（临时编辑用）
+function saveLocal() {
+  localStorage.setItem("NAV_LOCAL", JSON.stringify(siteData));
+}
+function loadLocal() {
+  const d = localStorage.getItem("NAV_LOCAL");
+  if (d) siteData = JSON.parse(d);
+}
+
+// 渲染页面
+function render() {
+  const cates = ["常用", "工具", "视频"];
+  const el = document.getElementById("content");
+  el.innerHTML = cates.map(cate => `
+    <h2>${cate}</h2>
+    <div class="grid">
+      ${siteData[cate].map((it, i) => `
+        <div class="item">
+          <a href="${it.url}" target="_blank">${it.name}</a>
+          <div class="del" onclick="del('${cate}', ${i})">删除</div>
+        </div>
+      `).join('')}
+    </div>
+  `).join('');
+}
+
+// 添加网站
+function addSite() {
+  const name = document.getElementById("name").value.trim();
+  const url = document.getElementById("url").value.trim();
+  const cate = document.getElementById("cate").value;
+  if (!name || !url) return alert("请填写完整");
+  siteData[cate].push({ name, url });
+  saveLocal();
+  render();
+  toggleAdd(true);
+}
+
+// 删除
+function del(cate, i) {
+  siteData[cate].splice(i, 1);
+  saveLocal();
+  render();
+}
+
+// 面板显示隐藏
+function toggleAdd(forceClose) {
+  const p = document.getElementById("addPanel");
+  if (forceClose) p.classList.add("hide");
+  else p.classList.toggle("hide");
+  document.getElementById("name").value = "";
+  document.getElementById("url").value = "";
+}
+
+// 导出为 sites.json（上传到GitHub）
+function exportJson() {
+  const blob = new Blob([JSON.stringify(siteData, null, 2)], {
+    type: "application/json"
+  });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "sites.json";
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+// 导入本地 json
+function importJsonClick() {
+  document.getElementById("importFile").click();
+}
+function importJson(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const r = new FileReader();
+  r.onload = (ev) => {
+    try {
+      siteData = JSON.parse(ev.target.result);
+      saveLocal();
+      render();
+      alert("导入成功");
+    } catch {
+      alert("格式错误");
+    }
+  };
+  r.readAsText(file);
+}
+
+// 暗黑模式
+function initDark() {
+  if (localStorage.getItem("DARK") === "1") {
+    document.body.dataset.theme = "dark";
+  }
+}
+document.getElementById("toggleDark").onclick = () => {
+  const dark = document.body.dataset.theme !== "dark";
+  document.body.dataset.theme = dark ? "dark" : "";
+  localStorage.setItem("DARK", dark ? "1" : "0");
+};
+
+// 初始化
+initDark();
+loadFromGithub(); // 优先读 GitHub 配置
+loadLocal();      // 再读本地修改
+render();
+</script>
+
+</body>
+</html>
