@@ -1,5 +1,275 @@
 {
-  "常用": [],
-  "工具": [],
-  "视频": []
+  "categories": [
+    {
+      "name": "热门常用",
+      "sort": 10
+    },
+    {
+      "name": "影视娱乐",
+      "sort": 16
+    },
+    {
+      "name": "快递邮箱",
+      "sort": 20
+    },
+    {
+      "name": "专业技术",
+      "sort": 30
+    },
+    {
+      "name": "常用资料",
+      "sort": 999
+    },
+    {
+      "name": "支付银行",
+      "sort": 18
+    }
+  ],
+  "sites": [
+    {
+      "name": "国家药监局",
+      "url": "https://zwfw.nmpa.gov.cn/web/index",
+      "cate": "专业技术"
+    },
+    {
+      "name": "广东药师协会",
+      "url": "https://www.gdysxh.com/index",
+      "cate": "专业技术"
+    },
+    {
+      "name": "中国药师协会",
+      "url": "https://hy.clponline.cn/associator/web/index.php?r=index%2Fselsignup",
+      "cate": "专业技术"
+    },
+    {
+      "name": "广东人事考试",
+      "url": "https://rsks.gd.gov.cn/",
+      "cate": "专业技术"
+    },
+    {
+      "name": "370看看",
+      "url": "http://www.370kan.com/",
+      "cate": "影视娱乐"
+    },
+    {
+      "name": "6V电影",
+      "url": "https://www.hao6v.net/",
+      "cate": "影视娱乐"
+    },
+    {
+      "name": "在线电影",
+      "url": "https://www.kkpian.me/",
+      "cate": "影视娱乐"
+    },
+    {
+      "name": "顺丰快递",
+      "url": "https://www.sf-express.com/chn/sc",
+      "cate": "快递邮箱"
+    },
+    {
+      "name": "EMS",
+      "url": "https://www.ems.com.cn/",
+      "cate": "快递邮箱"
+    },
+    {
+      "name": "韵达快递",
+      "url": "https://www.yundaex.com/cn/index.php",
+      "cate": "快递邮箱"
+    },
+    {
+      "name": "申通快递",
+      "url": "https://www.sto.cn/pc",
+      "cate": "快递邮箱"
+    },
+    {
+      "name": "圆通快递",
+      "url": "https://www.yto.net.cn/",
+      "cate": "快递邮箱"
+    },
+    {
+      "name": "QQ邮箱",
+      "url": "https://mail.qq.com/",
+      "cate": "快递邮箱"
+    },
+    {
+      "name": "163邮箱",
+      "url": "https://mail.163.com/js6/main.jsp?sid=ZLuHkvoNouuckEAcsjYMCsICgAGbLrEN&df=unknow",
+      "cate": "快递邮箱"
+    },
+    {
+      "name": "126邮箱",
+      "url": "https://mail.126.com/",
+      "cate": "快递邮箱"
+    },
+    {
+      "name": "Hotmail",
+      "url": "https://outlook.live.com/mail/",
+      "cate": "快递邮箱"
+    },
+    {
+      "name": "搜狐邮箱",
+      "url": "https://mail.sohu.com/fe/",
+      "cate": "快递邮箱"
+    },
+    {
+      "name": "天天基金",
+      "url": "https://fund.eastmoney.com/",
+      "cate": "支付银行"
+    },
+    {
+      "name": "建设银行",
+      "url": "ebank.ccb.com/chn/ebank/indexv3.shtml",
+      "cate": "支付银行"
+    },
+    {
+      "name": "浦发银行",
+      "url": "https://www.spdb.com.cn/",
+      "cate": "支付银行"
+    },
+    {
+      "name": "农业银行",
+      "url": "https://www.abchina.com/cn/",
+      "cate": "支付银行"
+    },
+    {
+      "name": "招商银行",
+      "url": "https://www.cmbchina.com/pbankwebNew/downloadPage.aspx",
+      "cate": "支付银行"
+    },
+    {
+      "name": "中国银行",
+      "url": "https://www.boc.cn/",
+      "cate": "支付银行"
+    },
+    {
+      "name": "工商银行",
+      "url": "https://www.icbc.com.cn/",
+      "cate": "支付银行"
+    },
+    {
+      "name": "网易",
+      "url": "https://www.163.com/",
+      "cate": "热门常用"
+    },
+    {
+      "name": "凤凰网",
+      "url": "https://www.ifeng.com/",
+      "cate": "热门常用"
+    },
+    {
+      "name": "bilibili",
+      "url": "https://www.bilibili.com/",
+      "cate": "热门常用"
+    },
+    {
+      "name": "腾讯",
+      "url": "https://www.qq.com/",
+      "cate": "热门常用"
+    },
+    {
+      "name": "淘宝网",
+      "url": "https://www.taobao.com/",
+      "cate": "热门常用"
+    },
+    {
+      "name": "京东商城",
+      "url": "https://www.jd.com/",
+      "cate": "热门常用"
+    },
+    {
+      "name": "天猫",
+      "url": "https://www.tmall.com/",
+      "cate": "热门常用"
+    },
+    {
+      "name": "知乎",
+      "url": "https://www.zhihu.com/explore",
+      "cate": "热门常用"
+    },
+    {
+      "name": "深圳图书馆",
+      "url": "https://www.szlib.org.cn/#",
+      "cate": "热门常用"
+    },
+    {
+      "name": "豆包",
+      "url": "https://www.doubao.com/chat/",
+      "cate": "热门常用"
+    },
+    {
+      "name": "中国人事考试",
+      "url": "http://www.cpta.com.cn/",
+      "cate": "专业技术"
+    },
+    {
+      "name": "即梦AI",
+      "url": "https://jimeng.jianying.com/ai-tool/home",
+      "cate": "热门常用"
+    },
+    {
+      "name": "网易云音乐",
+      "url": "https://music.163.com/",
+      "cate": "影视娱乐"
+    },
+    {
+      "name": "12306火车票",
+      "url": "https://www.12306.cn/index/",
+      "cate": "常用资料"
+    },
+    {
+      "name": "梦幻答题器",
+      "url": "https://175dt.com/26",
+      "cate": "常用资料"
+    },
+    {
+      "name": "RO",
+      "url": "http://www.hao4u.com/",
+      "cate": "常用资料"
+    },
+    {
+      "name": "广东电信",
+      "url": "https://gd.189.cn/",
+      "cate": "常用资料"
+    },
+    {
+      "name": "富贵论坛",
+      "url": "https://www.fglt.net/",
+      "cate": "常用资料"
+    },
+    {
+      "name": "Github.com",
+      "url": "https://github.com/",
+      "cate": "常用资料"
+    },
+    {
+      "name": "PE工具箱",
+      "url": "https://www.wepe.com.cn/",
+      "cate": "常用资料"
+    },
+    {
+      "name": "红岭创投",
+      "url": "https://www.my089.com/",
+      "cate": "常用资料"
+    },
+    {
+      "name": "chrome插件",
+      "url": "https://www.crx4chrome.com/",
+      "cate": "常用资料"
+    },
+    {
+      "name": "抖音",
+      "url": "https://www.douyin.com/search/%E6%A2%A6%E5%B9%BB%E8%A5%BF%E6%B8%B8?type=live",
+      "cate": "热门常用"
+    },
+    {
+      "name": "百度翻译",
+      "url": "https://fanyi.baidu.com/mtpe-individual/transText#/",
+      "cate": "热门常用"
+    },
+    {
+      "name": "傲梅分区",
+      "url": "https://www.disktool.cn/",
+      "cate": "常用资料"
+    }
+  ]
 }
