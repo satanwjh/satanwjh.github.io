@@ -6,8 +6,8 @@
 <title>我的导航</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:"Microsoft YaHei",sans-serif}
-:root{--bg:#f5f7fa;--card:#fff;--text:#333;--border:#ddd;--accent:#409eff;--danger:#f56c6c}
-[data-theme="dark"]{--bg:#1a1a1a;--card:#2c2c2c;--text:#eee;--border:#444;--accent:#53a6ff;--danger:#ff7a7a}
+:root{--bg:#f5f7fa;--card:#fff;--text:#333;--border:#ddd;--accent:#409eff}
+[data-theme="dark"]{--bg:#1a1a1a;--card:#2c2c2c;--text:#eee;--border:#444;--accent:#53a6ff}
 
 body{
   background:var(--bg);
@@ -18,7 +18,7 @@ body{
   transition:.2s;
 }
 
-/* 百度搜索（带分类） */
+/* 百度搜索 */
 .search-module {
   width:680px;
   margin:0 auto 22px;
@@ -70,14 +70,11 @@ body{
   justify-content:space-between;
   align-items:center;
   margin-bottom:16px;
-  flex-wrap:wrap;
-  gap:8px;
 }
 .bar{display:flex;gap:6px}
 .bar button{padding:6px 10px;border-radius:4px;border:none;cursor:pointer;font-size:13px}
-.btn-add{background:#409eff;color:#fff}
-.btn-edit{background:#409eff;color:#fff}
 .btn-dark{background:var(--card);color:var(--text);border:1px solid var(--border)}
+.btn-bg{background:var(--accent);color:#fff}
 
 .panel{
   background:var(--card);
@@ -86,7 +83,7 @@ body{
   margin-bottom:12px;
   border:1px solid var(--border);
 }
-input,select{
+input{
   width:100%;
   padding:7px;
   margin:5px 0;
@@ -100,24 +97,16 @@ input,select{
 h2{
   font-size:16px;
   margin:18px 0 8px;
-  display:flex;
-  gap:10px;
-  align-items:center;
 }
-.cate-edit-area{display:none;gap:8px;font-size:12px}
-.edit-mode .cate-edit-area{display:flex}
-.cate-edit{color:var(--accent);cursor:pointer}
-.cate-del{color:var(--danger);cursor:pointer}
 
-/* 核心改动：固定一行6个卡片，和51kim布局一致 */
+/* 一行6个卡片 */
 .grid{
   display:grid;
-  grid-template-columns: repeat(6, 1fr); /* 强制每行6列均分 */
+  grid-template-columns: repeat(6, 1fr);
   gap:8px;
   margin-bottom:8px;
 }
 .item{
-  position:relative; /* 给右上角按钮做定位基准 */
   background:var(--card);
   padding:10px 6px;
   border-radius:6px;
@@ -127,13 +116,8 @@ h2{
   align-items:center;
   justify-content:flex-start;
   gap:6px;
-  transition:all 0.2s;
   padding-left:10px;
 }
-body.edit-mode .item {
-  cursor: grab;
-}
-/* 网站小图标样式 */
 .site-ico{
   width:18px;
   height:18px;
@@ -141,16 +125,14 @@ body.edit-mode .item {
   object-fit:cover;
   background:#eee;
 }
-/* 文字强制单行，超出省略，不会折两行 */
 .item a{
   color:var(--text);
   text-decoration:none;
-  font-weight:normal;
   font-size:13px;
-  white-space: nowrap;    /* 禁止换行 */
-  overflow: hidden;       /* 超出隐藏 */
-  text-overflow: ellipsis;/* 文字末尾显示省略号... */
-  max-width:88px;         /* 限制文字最大宽度，防止挤压图标 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width:88px;
 }
 .item:hover{
   background:#e8f4ff;
@@ -161,60 +143,17 @@ body.edit-mode .item {
 }
 
 .content-wrap{
-  background: rgba(255,255,255,0.82); /* 白色半透，挡住底层背景图 */
+  background: rgba(255,255,255,0.82);
   border-radius:12px;
   padding:16px;
 }
 
-/* 右上角删除叉号 */
-.del-cross{
-  position:absolute;
-  top:2px;
-  right:3px;
-  width:18px;
-  height:18px;
-  border-radius:50%;
-  background:rgba(0,0,0,0.5);
-  color:#fff;
-  font-size:14px;
-  text-align:center;
-  line-height:18px;
-  cursor:pointer;
-  display:none;
-}
-.edit-mode .del-cross{
-  display:block;
-}
-.del-cross:hover{
-  background:#f56c6c;
-}
-
-/* 右上角铅笔修改按钮 */
-.edit-pencil{
-  position:absolute;
-  top:2px;
-  right:24px;
-  font-size:14px;
-  cursor:pointer;
-  display:none;
-}
-.edit-mode .edit-pencil{
-  display:block;
-}
-
-/* 底部文字修改删除区域直接隐藏，不再占用空间 */
-.item-actions{
-  display:none !important;
-}
-
-.sortable-ghost{opacity:0.4;background:#e8f4ff !important}
-.sortable-chosen{cursor:grabbing}
 .hide{display:none}
 </style>
 </head>
 <body>
 
-<!-- 百度搜索（带分类） -->
+<!-- 百度搜索 -->
 <div class="search-module">
   <div class="search-tab">
     <span class="active" data-type="web">网页</span>
@@ -232,49 +171,14 @@ body.edit-mode .item {
 <div class="header">
   <h1>我的导航</h1>
   <div class="bar">
-    <button class="btn-add" id="toggleSitePanel">+ 加网址</button>
-    <button class="btn-add" id="toggleCatePanel">+ 加分类</button>
-    <button class="btn-edit" id="editBtn">编辑模式</button>
-    <button class="btn-add" id="changeBgBtn">换背景</button>
-    <button class="btn-dark" id="toggleDark">暗黑</button>
+    <button class="btn-bg" id="changeBgBtn">背景</button>
+    <button class="btn-dark" id="toggleDark">暗黑模式</button>
   </div>
 </div>
 
-<!-- 添加网址 -->
-<div class="panel hide" id="sitePanel">
-  <input id="siteName" placeholder="网站名称">
-  <input id="siteUrl" placeholder="网址 https://">
-  <select id="siteCate"></select>
-  <button id="saveSiteBtn" style="margin-top:6px;background:#409eff;color:#fff;width:100%;padding:7px;border:none;border-radius:4px;cursor:pointer">保存网址</button>
-</div>
-
-<!-- 添加分类 -->
-<div class="panel hide" id="catePanel">
-  <input id="cateName" placeholder="分类名称">
-  <input id="cateSort" type="number" placeholder="排序编号" value="10">
-  <button id="saveCateBtn" style="margin-top:6px;background:#409eff;color:#fff;width:100%;padding:7px;border:none;border-radius:4px;cursor:pointer">保存分类</button>
-</div>
-
-<!-- 编辑网址 -->
-<div class="panel hide" id="editSitePanel">
-  <input type="hidden" id="editSiteKey">
-  <input id="editSiteName" placeholder="网站名称">
-  <input id="editSiteUrl" placeholder="网址链接">
-  <select id="editSiteCate"></select>
-  <button id="updateSiteBtn" style="margin-top:6px;background:#409eff;color:#fff;width:100%;padding:7px;border:none;border-radius:4px;cursor:pointer">确认修改网址</button>
-</div>
-
-<!-- 编辑分类 -->
-<div class="panel hide" id="editCatePanel">
-  <input type="hidden" id="editCateOldName">
-  <input id="editCateName" placeholder="新分类名称">
-  <input id="editCateSort" type="number" placeholder="排序编号">
-  <button id="updateCateBtn" style="margin-top:6px;background:#409eff;color:#fff;width:100%;padding:7px;border:none;border-radius:4px;cursor:pointer">确认修改分类</button>
-</div>
-
-<!-- 更换背景面板 -->
+<!-- 更换背景 -->
 <div class="panel hide" id="bgPanel">
-  <input id="bgUrl" placeholder="粘贴图片链接（支持本地路径/网络图）">
+  <input id="bgUrl" placeholder="图片链接">
   <button id="saveBgBtn" style="margin-top:6px;background:#409eff;color:#fff;width:100%;padding:7px;border:none;border-radius:4px;cursor:pointer">应用背景</button>
 </div>
 
@@ -282,11 +186,8 @@ body.edit-mode .item {
   <div id="content"></div>
 </div>
 
-<!-- 拖拽库 -->
-<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
-
 <script>
-// 搜索分类切换
+// 搜索
 let searchType = 'web';
 document.querySelectorAll('.search-tab span').forEach(tab => {
   tab.onclick = () => {
@@ -310,200 +211,45 @@ function doSearch() {
   window.open(url + encodeURIComponent(kw));
 }
 
-const STORAGE_KEY = 'MY_NAV_DATA';
-
-function getDefaultData() {
-  return { categories: [{ name: "常用", sort: 10 }], sites: [] }
-}
-
-function getData() {
-  try {
-    const d = localStorage.getItem(STORAGE_KEY);
-    return d ? JSON.parse(d) : getDefaultData();
-  } catch (e) {
-    return getDefaultData();
-  }
-}
-
-function saveData(data) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-}
-
-// 国内稳定favicon接口
+// 图标
 function getFaviconUrl(url) {
   return `https://api.xinac.net/icon/?url=${encodeURIComponent(url)}`;
 }
 
-// 渲染 + 拖拽初始化
-function render() {
-  const d = getData();
-  const sortedCates = [...d.categories].sort((a, b) => a.sort - b.sort);
-  const opts = sortedCates.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
-  document.getElementById('siteCate').innerHTML = opts;
-  document.getElementById('editSiteCate').innerHTML = opts;
+// 读取 sites.json
+async function loadData() {
+  try {
+    const res = await fetch('./sites.json');
+    const data = await res.json();
+    render(data);
+  } catch (e) {
+    document.getElementById('content').innerHTML = '<p>加载 sites.json 失败</p>';
+  }
+}
 
+// 渲染页面
+function render(data) {
+  if (!data?.categories || !data?.sites) return;
+
+  const sortedCates = [...data.categories].sort((a, b) => (a.sort || 10) - (b.sort || 10));
   let html = '';
-  sortedCates.forEach((cate, idx) => {
-    const list = d.sites.filter(s => s.cate === cate.name);
-    html += `<h2>${cate.name}
-      <span class="cate-edit-area">
-        <span class="cate-edit" onclick="editCate('${cate.name}')">编辑分类</span>
-        <span class="cate-del" onclick="delCate('${cate.name}')">删除分类</span>
-      </span>
-    </h2><div class="grid" data-cate="${cate.name}" id="grid-${idx}">`;
-    list.forEach((site, i) => {
-      const key = `${cate.name}-${i}`;
-      const icoSrc = getFaviconUrl(site.url);
-      // 卡片结构替换：右上角铅笔+叉号，底部文字操作区彻底移除
+
+  sortedCates.forEach(cate => {
+    const list = data.sites.filter(s => s.cate === cate.name);
+    html += `<h2>${cate.name}</h2><div class="grid">`;
+    list.forEach(site => {
+      const ico = getFaviconUrl(site.url);
       html += `
       <div class="item">
-        <img class="site-ico" src="${icoSrc}" alt="" onerror="this.style.display='none'">
+        <img class="site-ico" src="${ico}" alt="" onerror="this.style.display='none'">
         <a href="${site.url}" target="_blank">${site.name}</a>
-        <span class="edit-pencil" onclick="startEdit('${key}')">✏️</span>
-        <span class="del-cross" onclick="delSite('${key}')">×</span>
-        <div class="item-actions">
-        </div>
       </div>`;
     });
     html += '</div>';
   });
+
   document.getElementById('content').innerHTML = html;
-
-  // 只有编辑模式才开启拖拽
-  if (editMode) {
-    sortedCates.forEach((cate, idx) => {
-      const el = document.getElementById(`grid-${idx}`);
-      if (!el) return;
-      new Sortable(el, {
-        animation: 150,
-        ghostClass: 'sortable-ghost',
-        chosenClass: 'sortable-chosen',
-        onEnd: function (evt) {
-          const cateName = el.dataset.cate;
-          const data = getData();
-          const items = data.sites.filter(s => s.cate === cateName);
-          const oldIndex = evt.oldIndex;
-          const newIndex = evt.newIndex;
-
-          const moved = items.splice(oldIndex, 1)[0];
-          items.splice(newIndex, 0, moved);
-
-          const others = data.sites.filter(s => s.cate !== cateName);
-          data.sites = [...others, ...items];
-          saveData(data);
-        }
-      });
-    });
-  }
 }
-
-// 网址操作
-function addSite() {
-  const n = document.getElementById('siteName').value.trim();
-  const u = document.getElementById('siteUrl').value.trim();
-  const c = document.getElementById('siteCate').value;
-  if (!n || !u) return alert('请填写完整');
-  const d = getData();
-  d.sites.push({ name: n, url: u, cate: c });
-  saveData(d);
-  render();
-  document.getElementById('sitePanel').classList.add('hide');
-}
-
-function startEdit(key) {
-  const [c, i] = key.split('-');
-  const d = getData();
-  const s = d.sites.filter(x => x.cate === c)[i];
-  if (!s) return;
-  document.getElementById('editSiteKey').value = key;
-  document.getElementById('editSiteName').value = s.name;
-  document.getElementById('editSiteUrl').value = s.url;
-  document.getElementById('editSiteCate').value = s.cate;
-  document.getElementById('editSitePanel').classList.remove('hide');
-}
-
-function updateSite() {
-  const key = document.getElementById('editSiteKey').value;
-  const n = document.getElementById('editSiteName').value.trim();
-  const u = document.getElementById('editSiteUrl').value.trim();
-  const c = document.getElementById('editSiteCate').value;
-  if (!key || !n || !u) return;
-  const [oc, i] = key.split('-');
-  const d = getData();
-  const old = d.sites.filter(x => x.cate === oc)[i];
-  d.sites = d.sites.filter(x => !(x.cate === oc && x.name === old.name && x.url === old.url));
-  d.sites.push({ name: n, url: u, cate: c });
-  saveData(d);
-  render();
-  document.getElementById('editSitePanel').classList.add('hide');
-}
-
-function delSite(key) {
-  if (!confirm('确定删除该网站？')) return;
-  const [c, i] = key.split('-');
-  const d = getData();
-  const s = d.sites.filter(x => x.cate === c)[i];
-  d.sites = d.sites.filter(x => !(x.cate === c && x.name === s.name && x.url === s.url));
-  saveData(d);
-  render();
-}
-
-// 分类操作
-function addCate() {
-  const n = document.getElementById('cateName').value.trim();
-  const s = Number(document.getElementById('cateSort').value) || 99;
-  if (!n) return alert('请输入分类名');
-  const d = getData();
-  if (d.categories.some(x => x.name === n)) return alert('已存在');
-  d.categories.push({ name: n, sort: s });
-  saveData(d);
-  render();
-  document.getElementById('catePanel').classList.add('hide');
-}
-
-function editCate(oldName) {
-  const d = getData();
-  const t = d.categories.find(x => x.name === oldName);
-  if (!t) return;
-  document.getElementById('editCateOldName').value = oldName;
-  document.getElementById('editCateName').value = t.name;
-  document.getElementById('editCateSort').value = t.sort;
-  document.getElementById('editCatePanel').classList.remove('hide');
-}
-
-function updateCate() {
-  const old = document.getElementById('editCateOldName').value;
-  const newName = document.getElementById('editCateName').value.trim();
-  const newSort = Number(document.getElementById('editCateSort').value) || 99;
-  if (!newName) return alert('名称不能为空');
-  const d = getData();
-  if (newName !== old && d.categories.some(x => x.name === newName)) return alert('重复');
-  const cate = d.categories.find(x => x.name === old);
-  cate.name = newName;
-  cate.sort = newSort;
-  d.sites.forEach(x => { if (x.cate === old) x.cate = newName });
-  saveData(d);
-  render();
-  document.getElementById('editCatePanel').classList.add('hide');
-}
-
-function delCate(name) {
-  const d = getData();
-  if (d.sites.some(x => x.cate === name)) return alert('分类不为空，无法删除');
-  if (!confirm('确定删除？')) return;
-  d.categories = d.categories.filter(x => x.name !== name);
-  saveData(d);
-  render();
-}
-
-// 编辑模式
-let editMode = false;
-document.getElementById('editBtn').onclick = () => {
-  editMode = !editMode;
-  document.body.classList.toggle('edit-mode', editMode);
-  this.innerText = editMode ? '关闭编辑' : '编辑模式';
-  render(); // 切换编辑后重新渲染，激活拖拽与图标
-};
 
 // 暗黑模式
 document.getElementById('toggleDark').onclick = () => {
@@ -512,24 +258,7 @@ document.getElementById('toggleDark').onclick = () => {
   localStorage.setItem('DARK', dark ? '1' : '0');
 };
 
-// 面板开关
-document.getElementById('toggleSitePanel').onclick = () => {
-  document.getElementById('sitePanel').classList.toggle('hide');
-};
-document.getElementById('toggleCatePanel').onclick = () => {
-  document.getElementById('catePanel').classList.toggle('hide');
-};
-
-document.getElementById('saveSiteBtn').onclick = addSite;
-document.getElementById('saveCateBtn').onclick = addCate;
-document.getElementById('updateSiteBtn').onclick = updateSite;
-document.getElementById('updateCateBtn').onclick = updateCate;
-
-if (localStorage.getItem('DARK') === '1') {
-  document.body.dataset.theme = 'dark';
-}
-
-// 更换背景
+// 背景
 document.getElementById('changeBgBtn').onclick = () => {
   document.getElementById('bgPanel').classList.toggle('hide');
 };
@@ -541,13 +270,17 @@ document.getElementById('saveBgBtn').onclick = () => {
   document.getElementById('bgPanel').classList.add('hide');
 };
 
-// 刷新自动恢复背景
-const savedBg = localStorage.getItem('BG_URL');
-if (savedBg) {
-  document.body.style.background = `url(${savedBg}) center center / cover fixed`;
+// 自动恢复
+if (localStorage.getItem('DARK') === '1') {
+  document.body.dataset.theme = 'dark';
+}
+const bg = localStorage.getItem('BG_URL');
+if (bg) {
+  document.body.style.background = `url(${bg}) center center / cover fixed`;
 }
 
-render();
+// 启动
+loadData();
 </script>
 </body>
 </html>
